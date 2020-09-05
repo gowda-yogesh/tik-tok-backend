@@ -1,0 +1,25 @@
+{
+  "name": "tiktok-backend",
+  "version": "1.0.0",
+  "description": "tiktok-backend",
+  "main": "server.js",
+  "type": "module",
+  "engine": {
+    "node": ">=12.x.x",
+    "npm": ">=6.x.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "yogesh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
