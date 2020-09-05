@@ -1,6 +1,7 @@
 // imports and Environment initialise
 import express from "express";
 import mongoose from "mongoose";
+import data from "./data.js"
 import tiktokVideo from "./dbModel.js"
 
 
