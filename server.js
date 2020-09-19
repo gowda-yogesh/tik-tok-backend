@@ -1,9 +1,12 @@
 // imports and Environment initialise
 import express from "express";
 import mongoose from "mongoose";
-import data from "./data.js"
-import tiktokVideo from "./dbModel.js"
+import data from "./data.js";
+import tiktokVideo from "./dbModel.js";
+import Stripe from "stripe";
 
+// Stripe for amazon (stripe Secret Key)
+const stripe = new Stripe("sk_test_51HSFjhCUcvvuS7GMLeagcgiWNGaObl5JKgeGU7oFQCDgCyYh4mCUcZkMvYAxfnc67biprt6GPzAboF7qT4vmrPhB00G2Co1Hu0");
 
 const PORT = process.env.PORT || 1234;
 
@@ -37,7 +40,7 @@ mongoose.connect(connection_string, {
 // api endpoints
 app.get("/", (req, res) => {
     console.log("server get working")
-    res.status(200).json("serevre workig=ng well")
+    res.status(200).json("This the Back End for Tick Tok  and Amazon  Please open the Front End via  links given in Portfolio or Git hub. Portfolio- https://yogesh-portfolio.netlify.app/   GitHub- https://github.com/YOGESH-C-GOWDA")
 })
 
 app.get("/v1/posts", (req, res) => {
@@ -74,6 +77,44 @@ app.post("/v2/posts", (req, res) => {
     })
 
 })
+
+// Start of Amazon
+
+
+// - API routes
+app.get("/api/v1/amazon", (request, response) => response.status(200).send("Yogesh Completed the amazon Clone on 15 Sep 2020"));
+
+app.post("/api/v1/amazon/payments/create", async (request, response) => {
+    try {
+        const total = request.query.total;
+
+        console.log("Payment Request Recievied in Indian paisee >>> ", total);
+
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: total, // subunits of the currency
+            currency: "inr",
+        });
+        console.log("Part 2: Payment Request Recievied in Indian paisee  >>> ", total);
+        // OK - Created
+        response.status(201).send({
+            clientSecret: paymentIntent.client_secret,
+        });
+
+    } catch (e) {
+        if (e.type === 'StripeCardError') {
+            // Display error on client
+            return response.send({ error: e.message });
+        } else {
+            // Something else happened
+            return response.status(500).send({ error: e.type });
+        }
+
+    }
+});
+
+// End of amazon
+
+
 
 // listen
 app.listen(PORT, console.log(`server runnung at port ${PORT}`));
